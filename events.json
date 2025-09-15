@@ -2,12 +2,12 @@
   {
     "league": "Asia Cup 2025",
     "team1": {
-      "name": "UAE",
-      "logo": "https://flagcdn.com/h240/ae.jpg"
+      "name": "sri lanka",
+      "logo": "https://flagcdn.com/h240/lk.jpg"
     },
     "team2": {
-      "name": "OMAN",
-      "logo": "https://flagcdn.com/h240/om.jpg"
+      "name": "Hongkong",
+      "logo": "https://flagcdn.com/h240/hk.jpg"
     },
     "score": "0-0",
     "status": "live",
@@ -15,7 +15,7 @@
       {
         "url": "https://topproxy.pirsabaq47.workers.dev/?cid=370",
         "quality": "HD",
-        "name": "Willow Cricket"
+        "name": "Fast Strean"
       }
     ],
     "id": 397009
