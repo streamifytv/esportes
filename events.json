@@ -1,0 +1,23 @@
+[
+  {
+    "league": "Premier League",
+    "team1": {
+      "name": "Manchester United",
+      "logo": "https://example.com/manutd.png"
+    },
+    "team2": {
+      "name": "Liverpool FC",
+      "logo": "https://example.com/liverpool.png"
+    },
+    "score": "0-0",
+    "status": "upcoming",
+    "streamLinks": [
+      {
+        "url": "https://stream.example.com/match1",
+        "quality": "HD",
+        "name": "Primary Stream"
+      }
+    ],
+    "id": 731419
+  }
+]
