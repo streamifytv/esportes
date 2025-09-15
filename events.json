@@ -1,0 +1,77 @@
+[
+            {
+                id: 1,
+                league: "Saudi Pro League",
+                team1: { name: "Al-Hilal", logo: "H" },
+                team2: { name: "Al-Qadshah", logo: "Q" },
+                score: "1-2",
+                status: "completed",
+                streamLinks: [
+                    { url: "https://stream-link1.com", quality: "HD", name: "Primary Stream" },
+                    { url: "https://stream-link2.com", quality: "SD", name: "Secondary Stream" },
+                    { url: "https://stream-link3.com", quality: "FHD", name: "Premium Stream" }
+                ]
+            },
+            {
+                id: 2,
+                league: "Asia Cup, 2025",
+                team1: { name: "India", logo: "https://flagcdn.com/h240/in.jpg" },
+                team2: { name: "Pakistan", logo: "https://flagcdn.com/h240/pk.jpg" },
+                score: "LIVE",
+                status: "live",
+                streamLinks: [
+                    { url: "https://stream-link4.com", quality: "HD", name: "Main Broadcast" },
+                    { url: "https://stream-link5.com", quality: "SD", name: "Alternate Stream" },
+                    { url: "https://stream-link6.com", quality: "FHD", name: "Premium Broadcast" }
+                ]
+            },
+            {
+                id: 3,
+                league: "Premier League",
+                team1: { name: "Man United", logo: "MU" },
+                team2: { name: "Chelsea", logo: "CFC" },
+                score: "0-0",
+                status: "upcoming",
+                streamLinks: [
+                    { url: "https://stream-link7.com", quality: "HD", name: "Primary Stream" },
+                    { url: "https://stream-link8.com", quality: "SD", name: "Secondary Stream" }
+                ]
+            },
+            {
+                id: 4,
+                league: "La Liga",
+                team1: { name: "Barcelona", logo: "FCB" },
+                team2: { name: "Real Madrid", logo: "RMA" },
+                score: "2-1",
+                status: "completed",
+                streamLinks: [
+                    { url: "https://stream-link9.com", quality: "FHD", name: "Main Broadcast" },
+                    { url: "https://stream-link10.com", quality: "HD", name: "Alternate Stream" }
+                ]
+            },
+            {
+                id: 5,
+                league: "Champions League",
+                team1: { name: "Bayern", logo: "FCB" },
+                team2: { name: "PSG", logo: "PSG" },
+                score: "LIVE",
+                status: "live",
+                streamLinks: [
+                    { url: "https://stream-link11.com", quality: "HD", name: "Primary Stream" },
+                    { url: "https://stream-link12.com", quality: "SD", name: "Secondary Stream" },
+                    { url: "https://stream-link13.com", quality: "FHD", name: "Premium Stream" }
+                ]
+            },
+            {
+                id: 6,
+                league: "Serie A",
+                team1: { name: "Juventus", logo: "JUV" },
+                team2: { name: "Inter", logo: "INT" },
+                score: "0-0",
+                status: "upcoming",
+                streamLinks: [
+                    { url: "https://stream-link14.com", quality: "HD", name: "Main Broadcast" },
+                    { url: "https://stream-link15.com", quality: "SD", name: "Alternate Stream" }
+                ]
+            }
+        ];
