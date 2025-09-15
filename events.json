@@ -1,15 +1,33 @@
 [
-              {
-                id: 2,
-                league: "Asia Cup, 2025",
-                team1: { name: "India", logo: "https://flagcdn.com/h240/in.jpg" },
-                team2: { name: "Pakistan", logo: "https://flagcdn.com/h240/pk.jpg" },
-                score: "LIVE",
-                status: "live",
-                streamLinks: [
-                    { url: "https://stream-link4.com", quality: "HD", name: "Main Broadcast" },
-                    { url: "https://stream-link5.com", quality: "SD", name: "Alternate Stream" },
-                    { url: "https://stream-link6.com", quality: "FHD", name: "Premium Broadcast" }
-                ]
+    {
+        "id": 2,
+        "league": "Asia Cup, 2025",
+        "team1": {
+            "name": "India",
+            "logo": "https://flagcdn.com/h240/in.jpg"
+        },
+        "team2": {
+            "name": "Pakistan",
+            "logo": "https://flagcdn.com/h240/pk.jpg"
+        },
+        "score": "LIVE",
+        "status": "live",
+        "streamLinks": [
+            {
+                "url": "https://stream-link4.com",
+                "quality": "HD",
+                "name": "Main Broadcast"
+            },
+            {
+                "url": "https://stream-link5.com",
+                "quality": "SD",
+                "name": "Alternate Stream"
+            },
+            {
+                "url": "https://stream-link6.com",
+                "quality": "FHD",
+                "name": "Premium Broadcast"
             }
+        ]
+    }
 ]
