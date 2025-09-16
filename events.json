@@ -2,12 +2,12 @@
   {
     "league": "Asia Cup 2025",
     "team1": {
-      "name": "sri lanka",
-      "logo": "https://flagcdn.com/h240/lk.jpg"
+      "name": "Bangladesh",
+      "logo": "https://flagcdn.com/h240/bd.jpg"
     },
     "team2": {
-      "name": "Hongkong",
-      "logo": "https://flagcdn.com/h240/hk.jpg"
+      "name": "Afghanistan",
+      "logo": "https://flagcdn.com/h240/af.jpg"
     },
     "score": "0-0",
     "status": "live",
@@ -15,7 +15,12 @@
       {
         "url": "https://topproxy.pirsabaq47.workers.dev/?cid=370",
         "quality": "HD",
-        "name": "Fast Strean"
+        "name": "Astro Cricket"
+      },
+      {
+        "url": "https://topproxy.pirsabaq47.workers.dev/?cid=346",
+        "quality": "HD",
+        "name": "Willow Cricket"
       }
     ],
     "id": 397009
