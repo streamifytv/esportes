@@ -1,695 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamify - Football Streams</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>24/7 Live Sports & Entertainment Channels</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script type='text/javascript' src="https://cdn.jsdelivr.net/npm/afterglowplayer@1/dist/afterglow.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #e2e8f0;
-            line-height: 1.6;
-            min-height: 100vh;
-            padding-top: 70px; /* Space for sticky header */
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        header {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-        
-        header.hidden {
-            transform: translateY(-100%);
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            color: #60a5fa;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-        }
-        
-        .search-container {
-            display: flex;
-            align-items: center;
-            background: #1e293b;
-            border-radius: 20px;
-            padding: 5px 15px;
-            width: 300px;
-        }
-        
-        .search-container input {
-            background: transparent;
-            border: none;
-            color: #e2e8f0;
-            padding: 8px;
-            width: 100%;
-            outline: none;
-        }
-        
-        .search-container i {
-            color: #60a5fa;
-        }
-        
-        .player-container {
-            background: #0f172a;
-            padding: 0px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-            position: sticky;
-            top: 120px;
-            z-index: 900;
-            transition: top 0.3s ease;
-        }
-        
-        .video-placeholder {
-            width: 100%;
-            height: 280px;
-            background: #1e293b;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #cbd5e1;
-            border-radius: 8px;
-            position: relative;
-            border: 1px solid #334155;
-        }
-        
-        .video-placeholder i {
-            font-size: 2rem;
-            color: #60a5fa;
-            margin-bottom: 15px;
-            opacity: 0.7;
-        }
-        
-        .video-placeholder p {
-            font-size: 1.1rem;
-            color: #cbd5e1;
-        }
-        
-        .select-match-text {
-            text-align: center;
-            margin: 25px 0 15px;
-            font-size: 1.5rem;
-            color: #60a5fa;
-            font-weight: 600;
-        }
-        
-        .matches-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
-            padding: 20px 0 40px;
-        }
-        
-        .match-card {
-            background: #1e293b;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid #334155;
-            max-height: 150px; /* Collapsed height */
-        }
-        
-        .match-card.expanded {
-            max-height: 400px; /* Expanded height */
-        }
-        
-        .match-card:hover {
-            border-color: #60a5fa;
-        }
-        
-        .match-header {
-            background: #0f172a;
-            color: white;
-            padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .league {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #60a5fa;
-        }
-        
-        .match-status {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .status-live {
-            position: relative;
-            width: 50px;
-            height: 24px;
-            padding: 0;
-            border-radius: 12px;
-            background: transparent;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: visible;
-            box-shadow: none;
-            animation: none !important;
-        }
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <script type='text/javascript' src='//misusesetupindecision.com/5d/e7/87/5de787420376430095251716ce67b979.js'></script>
 
-        .status-live .ripple-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 24px;
-            height: 24px;
-        }
-
-        .status-live .center-dot {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 6px;
-            height: 6px;
-            background-color: #ef4444;
-            border-radius: 50%;
-            z-index: 10;
-        }
-
-        .status-live .ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            border: 2px solid #ef4444;
-            border-color: transparent #ef4444;
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0.5);
-            opacity: 0;
-            animation: fadeRing 1s ease-out infinite;
-        }
-
-        .status-live .ring1 {
-            width: 8px;
-            height: 8px;
-            animation-delay: 0s;
-        }
-
-        .status-live .ring2 {
-            width: 16px;
-            height: 16px;
-            animation-delay: 0.8s;
-        }
-
-        .status-live .ring3 {
-            width: 24px;
-            height: 24px;
-            animation-delay: 1.6s;
-        }
-
-        @keyframes fadeRing {
-            0% {
-                transform: translate(-50%, -50%) scale(0.5);
-                opacity: 0;
-            }
-            25% {
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1.5);
-                opacity: 0;
-            }
-        }
-        
-        .status-completed {
-            background: #10b981;
-        }
-        
-        .status-upcoming {
-            background: #f59e0b;
-        }
-        
-        .match-content {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .teams {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        
-        .team {
-            text-align: center;
-            width: 40%;
-        }
-        
-        .team-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #334155;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 5px;
-            font-size: 1.2rem;
-            color: #60a5fa;
-        }
-        
-        .team-name {
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-        
-        .vs {
-            font-weight: bold;
-            color: #94a3b8;
-            width: 20%;
-            text-align: center;
-            font-size: 0.75rem;
-        }
-        
-        .score {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #e2e8f0;
-            text-align: center;
-            margin: 8px 0;
-        }
-        
-        .stream-links {
-            margin-top: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .match-card.expanded .stream-links {
-            max-height: 300px;
-        }
-        
-        .stream-link {
-            display: flex;
-            align-items: center;
-            padding: 8px 12px;
-            background: #334155;
-            border-radius: 5px;
-            font-size: 0.85rem;
-            transition: background 0.3s;
-            text-decoration: none;
-            color: #e2e8f0;
-        }
-        
-        .stream-link:hover {
-            background: #475569;
-        }
-        
-        .stream-link i {
-            margin-right: 8px;
-            color: rgb(16, 185,129);
-        }
-        
-        .quality-badge {
-            margin-left: auto;
-            background: #60a5fa;
-            color: #0f172a;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-        
-        /* Loading indicator styles */
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 0;
-            color: #60a5fa;
-        }
-        
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(96, 165, 250, 0.3);
-            border-radius: 50%;
-            border-top-color: #60a5fa;
-            animation: spin 1s ease-in-out infinite;
-            margin-bottom: 20px;
-        }
-        
-        .loading-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        footer {
-            background: #0f172a;
-            color: #94a3b8;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            border-top: 1px solid #334155;
-        }
-        
-        .clogo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50px;
-        }
-        
-        @media (max-width: 768px) {
-            .matches-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .video-placeholder {
-                height: 220px;
-            }
-            
-            .video-placeholder i {
-                font-size: 3rem;
-            }
-            
-            .header-content {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .search-container {
-                width: 100%;
-                margin-top: 10px;
-            }
-            
-            .player-container {
-                top: 110px;
-            }
-            
-            body {
-                padding-top: 110px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <header id="main-header">
-        <div class="container header-content">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" id="gdp" href="#">GD PLAYER</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-dollar-sign me-1"></i> Buy a Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-envelope me-1"></i> Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-question-circle me-1"></i> FAQs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fab fa-github me-1"></i> GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <div class="hero-section text-center">
+            <h1 class="display-5 fw-bold mb-3">24/7 Live Sports & Entertainment Channels</h1>
+            <p class="lead mb-4">Access your favorite channels anytime, anywhere. Stream live content with no interruptions.</p>
+            
             <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" id="search-input" placeholder="Search matches...">
+                <i class="search-icon fas fa-search"></i>
+                <input type="search" class="form-control search-input" id="search" placeholder="Search channels...">
             </div>
+            <p class="result-count" id="resultCount">Loading channels...</p>
         </div>
-    </header>
-    
-    <div class="container">
-        <div class="player-container" id="player-container">
-            <div class="video-placeholder" id="video-player">
-                <i class="fas fa-play-circle"></i>
-                <p>Select a match to start watching</p>
+
+        <div class="categories-container" id="categoriesContainer">
             </div>
+
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading channels...</p>
         </div>
-        
-        <h2 class="select-match-text">Select a match to start watching</h2>
-        
-        <div class="matches-grid" id="matches-container">
-            <!-- Loading indicator will be shown here initially -->
-            <div class="loading-container">
-                <div class="loading-spinner"></div>
-                <div class="loading-text">Loading matches...</div>
+
+        <div class="row g-3" id="channelGrid">
             </div>
+        
+        <div class="no-results d-none" id="noResults">
+            <i class="fas fa-search fa-3x mb-3"></i>
+            <h4>No channels found</h4>
+            <p>Try different search terms</p>
         </div>
     </div>
-    
-    <footer>
+
+    <div class="iframe-viewer" id="videoViewer">
+        <div class="iframe-header">
+            <h5 class="mb-0" id="viewerTitle">Channel Viewer</h5>
+            <button class="close-btn" id="closeViewer">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="iframe-container">
+            <video id="channelPlayer" playsinline autoplay muted controls></video>
+            <script type="text/javascript">
+	atOptions = {
+		'key' : '579b0a9ded8d2a821629c141aadb2e2d',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//misusesetupindecision.com/579b0a9ded8d2a821629c141aadb2e2d/invoke.js"></script>
+        </div>
+    </div>
+
+    <footer class="footer text-center">
         <div class="container">
-            <p>&copy; 2025 Streamify - Football Streaming Platform</p>
+            <p class="mb-0">© <script>document.write("2018-"+new Date().getFullYear());</script> GD PLAYER TV. All rights reserved.</p>
+            <div class="marquee-container">
+                <div class="logo-box">
+                    <i class="fas fa-warning"></i>
+                </div>
+                <marquee behavior="scroll" direction="left" scrollamount="5">
+                    This site is not affiliated with any television channel. All content is copyright of their respective owners. We cannot accept any responsibility for the content on this site. We cannot control or influence any audiovisual content on this site. Viewers are expected to be wise in processing the information obtained.
+                </marquee>
+                
+            </div>
+            <script type="text/javascript">
+	atOptions = {
+		'key' : '579b0a9ded8d2a821629c141aadb2e2d',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//misusesetupindecision.com/579b0a9ded8d2a821629c141aadb2e2d/invoke.js"></script>
         </div>
     </footer>
 
-    <script>
-        // Function to fetch events data
-        async function fetchEvents() {
-            try {
-                const response = await fetch('https://raw.githubusercontent.com/streamifytv/esportes/refs/heads/main/events.json');
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+    
 
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error('Error fetching events:', error);
-                // Show error message to user
-                document.getElementById('matches-container').innerHTML = `
-                    <div class="loading-container">
-                        <div style="color: #ef4444; font-size: 3rem; margin-bottom: 15px;">
-                            <i class="fas fa-exclamation-circle"></i>
-                        </div>
-                        <div class="loading-text">Failed to load matches. Please try again later.</div>
-                    </div>
-                `;
-                return null;
-            }
-        }
-
-        // Function to render matches
-        function renderMatches(matchesData) {
-            const matchesContainer = document.getElementById('matches-container');
-            
-            // Clear loading indicator
-            matchesContainer.innerHTML = '';
-            
-            if (!matchesData || matchesData.length === 0) {
-                matchesContainer.innerHTML = `
-                    <div class="loading-container">
-                        <div style="color: #94a3b8; font-size: 3rem; margin-bottom: 15px;">
-                            <i class="fas fa-frown"></i>
-                        </div>
-                        <div class="loading-text">No matches available at the moment.</div>
-                    </div>
-                `;
-                return;
-            }
-            
-            matchesData.forEach(match => {
-                const matchCard = document.createElement('div');
-                matchCard.className = 'match-card';
-                matchCard.dataset.id = match.id;
-                
-                const statusClass = `match-status status-${match.status}`;
-                const statusText = match.status === 'live' ? 
-                    `<div class="ripple-container">
-                        <div class="center-dot"></div>
-                        <div class="ring ring1"></div>
-                        <div class="ring ring2"></div>
-                        <div class="ring ring3"></div>
-                    </div>` : 
-                    (match.status === 'completed' ? 'COMPLETED' : 'UPCOMING');
-                
-                // Generate stream links HTML
-                let streamLinksHTML = '';
-                if (match.streamLinks && match.streamLinks.length > 0) {
-                    match.streamLinks.forEach(link => {
-                        streamLinksHTML += `
-                            <a href="#" class="stream-link" data-stream="${link.url}">
-                                <i class="fas fa-play-circle"></i>
-                                ${link.name}
-                                <span class="quality-badge">${link.quality}</span>
-                            </a>
-                        `;
-                    });
-                } else {
-                    streamLinksHTML = `
-                        <div style="text-align: center; color: #94a3b8; padding: 10px;">
-                            No streams available
-                        </div>
-                    `;
-                }
-                
-                matchCard.innerHTML = `
-                    <div class="match-header">
-                        <div class="league">${match.league}</div>
-                        <div class="${statusClass}">${statusText}</div>
-                    </div>
-                    <div class="match-content">
-                        <div class="teams">
-                            <div class="team">
-                                <div class="team-logo"><img class="clogo" src="${match.team1.logo}" alt="${match.team1.name}"/></div>
-                                <div class="team-name">${match.team1.name}</div>
-                            </div>
-                            <div class="vs">VS</div>
-                            <div class="team">
-                                <div class="team-logo"><img class="clogo" src="${match.team2.logo}" alt="${match.team2.name}"/></div>
-                                <div class="team-name">${match.team2.name}</div>
-                            </div>
-                        </div>
-                        <div class="score">${match.score}</div>
-                        <div class="stream-links">
-                            ${streamLinksHTML}
-                        </div>
-                    </div>
-                `;
-                
-                matchesContainer.appendChild(matchCard);
-            });
-            
-            // Add event listeners to stream links
-            document.querySelectorAll('.stream-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const streamUrl = this.getAttribute('data-stream');
-                    playStream(streamUrl);
-                    
-                    // Collapse all cards
-                    document.querySelectorAll('.match-card').forEach(card => {
-                        card.classList.remove('expanded');
-                    });
-                });
-            });
-            
-            // Add event listeners to match cards for expand/collapse
-            document.querySelectorAll('.match-card').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    // Don't toggle if clicking on a stream link
-                    if (e.target.closest('.stream-link')) return;
-                    
-                    // Toggle expanded class
-                    this.classList.toggle('expanded');
-                    
-                    // Collapse other cards
-                    document.querySelectorAll('.match-card').forEach(otherCard => {
-                        if (otherCard !== this) {
-                            otherCard.classList.remove('expanded');
-                        }
-                    });
-                });
-            });
-        }
-        
-        // Function to handle stream playback
-        function playStream(url) {
-            const videoPlayer = document.getElementById('video-player');
-            videoPlayer.innerHTML = `<video class="afterglow" poster="" id='videoplayer'   autoplay muted controls title='Video 01' width='100%' height='300' data-autoresize="fit"  src="${url}"></video>
-          `;
-            
-            // Scroll to the player
-            document.querySelector('.player-container').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Search functionality
-        function setupSearch() {
-            const searchInput = document.getElementById('search-input');
-            
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                
-                document.querySelectorAll('.match-card').forEach(card => {
-                    const league = card.querySelector('.league').textContent.toLowerCase();
-                    const team1 = card.querySelector('.team:nth-child(1) .team-name').textContent.toLowerCase();
-                    const team2 = card.querySelector('.team:nth-child(3) .team-name').textContent.toLowerCase();
-                    
-                    if (league.includes(searchTerm) || team1.includes(searchTerm) || team2.includes(searchTerm)) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        }
-        
-        // Hide header on scroll
-        function setupScrollHide() {
-            let lastScrollTop = 0;
-            const header = document.getElementById('main-header');
-            const playerContainer = document.getElementById('player-container');
-            
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (scrollTop > lastScrollTop && scrollTop > 200) {
-                    // Scrolling down
-                    header.classList.add('hidden');
-                    playerContainer.style.top = '0';
-                } else {
-                    // Scrolling up
-                    header.classList.remove('hidden');
-                    playerContainer.style.top = '70px';
-                }
-                
-                lastScrollTop = scrollTop;
-            });
-        }
-        
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Show loading state initially
-            document.getElementById('matches-container').innerHTML = `
-                <div class="loading-container">
-                    <div class="loading-spinner"></div>
-                    <div class="loading-text">Loading matches...</div>
-                </div>
-            `;
-            
-            // Fetch data and render matches
-            const matchesData = await fetchEvents();
-            
-            if (matchesData) {
-                renderMatches(matchesData);
-                setupSearch();
-                setupScrollHide();
-            }
-        });
-    </script>
 </body>
 </html>
