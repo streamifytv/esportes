@@ -58,7 +58,7 @@
                             channels.push({
                                 name: channel.channel_name,
                                 category: category,
-                                url: `https://topproxy.pirsabaq47.workers.dev/?cid=${channel.channel_id}`,
+                                url: `https://wasitv-pro.site/gdp/${channel.channel_id}/index.m3u8`,
                                 eventName: event.event,
                                 eventTime: event.time
                             });
