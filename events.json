@@ -2,15 +2,15 @@
   {
     "league": "Asia Cup 2025",
     "team1": {
-      "name": "Bangladesh",
-      "logo": "https://flagcdn.com/h240/bd.jpg"
+      "name": "INDIA",
+      "logo": "https://flagcdn.com/h240/in.jpg"
     },
     "team2": {
-      "name": "Afghanistan",
-      "logo": "https://flagcdn.com/h240/af.jpg"
+      "name": "OMAN",
+      "logo": "https://flagcdn.com/h240/om.jpg"
     },
     "score": "7:15pm PAK TIME",
-    "status": "completed",
+    "status": "upcoming",
     "streamLinks": [
       {
         "url": "https://topproxy.pirsabaq47.workers.dev/?cid=370",
