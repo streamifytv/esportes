@@ -13,12 +13,12 @@
     "status": "upcoming",
     "streamLinks": [
       {
-        "url": "https://topproxy.pirsabaq47.workers.dev/?cid=370",
+        "url": "https://localhost.streamit.workers.dev/?cid=370&.m3u8",
         "quality": "HD",
         "name": "Astro Cricket"
       },
       {
-        "url": "https://topproxy.pirsabaq47.workers.dev/?cid=346",
+        "url": "https://localhost.streamit.workers.dev/?cid=346&.m3u8",
         "quality": "HD",
         "name": "Willow Cricket"
       }
