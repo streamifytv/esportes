@@ -13,14 +13,9 @@
     "status": "upcoming",
     "streamLinks": [
       {
-        "url": "https://localhost.streamit.workers.dev/?cid=370&.m3u8",
+        "url": "https://dd.cfcdn247.space/?url=https://dokko1new.newkso.ru/dokko1/premium91/mono.m3u8&data=UmVmZXJlcj1odHRwczovL2p4b3hrcGxheS54eXovInxPcmlnaW49Imh0dHBzOi8vanhveGtwbGF5Lnh5eiI=",
         "quality": "HD",
         "name": "Astro Cricket"
-      },
-      {
-        "url": "https://localhost.streamit.workers.dev/?cid=346&.m3u8",
-        "quality": "HD",
-        "name": "Willow Cricket"
       }
     ],
     "id": 397009
