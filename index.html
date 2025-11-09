@@ -2,56 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pharmacy Quick Sale</title>
+  <title>Pharmacy Quick Sale (Table View)</title>
   <style>
-    #searchResults .selected {
-      background-color: #cce5ff;
+    #searchResultsTable {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    #searchResultsTable th,
+    #searchResultsTable td {
+      border: 1px solid #ccc;
+      padding: 6px 10px;
+      text-align: left;
+    }
+    #searchResultsTable .selected {
+      background-color: #d0e7ff;
       font-weight: bold;
     }
-    #searchResults li {
-      padding: 6px 10px;
-      cursor: pointer;
-      list-style: none;
-      border-bottom: 1px solid #eee;
+    #searchResultsContainer {
+      max-height: 300px;
+      overflow-y: auto;
+      width: 600px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
     }
-    #searchResults li:hover {
-      background-color: #f0f0f0;
+    input#searchInput {
+      width: 500px;
+      padding: 6px;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
 
-<!-- New Search and Results Area -->
 <h2>Quick Sale / Add to Cart</h2>
 <input type="text" id="searchInput" placeholder="Search drug name..." autofocus />
 
-<div id="searchResultsContainer" style="max-height: 300px; overflow-y: auto; width: 500px; border: 1px solid #ccc;">
-    <ul id="searchResults">
-        <!-- Filtered inventory items will go here -->
-    </ul>
+<div id="searchResultsContainer">
+  <table id="searchResultsTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price (PKR)</th>
+      </tr>
+    </thead>
+    <tbody id="searchResultsBody">
+      <!-- Results will appear here -->
+    </tbody>
+  </table>
 </div>
 
 <hr />
-<!-- New Shopping Cart Area -->
+
 <h2>Shopping Cart</h2>
 <table border="1" id="cartTable">
-    <thead>
-        <tr><th>Name</th><th>Quantity</th><th>Price</th></tr>
-    </thead>
-    <tbody id="cartTableBody">
-        <!-- Cart items will be inserted here -->
-    </tbody>
+  <thead>
+    <tr><th>Name</th><th>Quantity</th><th>Price</th></tr>
+  </thead>
+  <tbody id="cartTableBody">
+    <!-- Cart items -->
+  </tbody>
 </table>
 <div id="cartTotal">Total: PKR 0.00</div>
 
 <script>
 const searchInput = document.getElementById('searchInput');
-const searchResultsUl = document.getElementById('searchResults');
+const resultsBody = document.getElementById('searchResultsBody');
 let selectedIndex = -1;
 let quantityModeItem = null;
 let quantityInputBuffer = '';
 
-// --- 1. Dummy Inventory (replace with IndexedDB later) ---
+// --- Dummy Inventory ---
 let inventoryList = [
     { id: 1, name: "Pain Relief Tablets 20mg", quantity: 50, price: 20.50 },
     { id: 8, name: "Pain Relief Tablets 10mg", quantity: 60, price: 10.50 },
@@ -61,52 +83,54 @@ let inventoryList = [
     { id: 5, name: "Band-Aids (Box)", quantity: 75, price: 5.00 },
 ];
 
-// --- 2. Filter and Display Results ---
+// --- Render Search Results as Table Rows ---
 function filterAndDisplayResults(searchTerm) {
-    searchResultsUl.innerHTML = '';
+    resultsBody.innerHTML = '';
     selectedIndex = -1;
 
-    if (!searchTerm.trim()) {
-        return;
-    }
+    if (!searchTerm.trim()) return;
 
-    const filteredItems = inventoryList
+    const filtered = inventoryList
         .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
         .slice(0, 10);
 
-    filteredItems.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.textContent = `${item.name} (Qty: ${item.quantity})`;
-        li.dataset.itemId = item.id;
-        li.dataset.index = index;
+    filtered.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>PKR ${item.price.toFixed(2)}</td>
+        `;
+        tr.dataset.itemId = item.id;
+        tr.dataset.index = index;
 
         if (index === 0) {
-            li.classList.add('selected');
+            tr.classList.add('selected');
             selectedIndex = 0;
         }
 
-        searchResultsUl.appendChild(li);
+        resultsBody.appendChild(tr);
     });
 }
 
-// --- 3. Update Selection Highlight and Scroll ---
-function updateSelection(results, newIndex) {
-    if (selectedIndex >= 0 && results[selectedIndex]) {
-        results[selectedIndex].classList.remove('selected');
+// --- Update Row Selection ---
+function updateSelection(newIndex) {
+    const rows = Array.from(resultsBody.querySelectorAll('tr'));
+
+    if (selectedIndex >= 0 && rows[selectedIndex]) {
+        rows[selectedIndex].classList.remove('selected');
     }
 
     selectedIndex = newIndex;
-    if (results[selectedIndex]) {
-        results[selectedIndex].classList.add('selected');
-        results[selectedIndex].scrollIntoView({ block: 'nearest' });
+    if (rows[selectedIndex]) {
+        rows[selectedIndex].classList.add('selected');
+        rows[selectedIndex].scrollIntoView({ block: 'nearest', behavior: 'auto' });
     }
 }
 
-// --- 4. Keyboard Navigation & Quantity Input ---
-document.addEventListener('keydown', handleKeyboardNavigation);
-
-function handleKeyboardNavigation(event) {
-    const results = Array.from(searchResultsUl.querySelectorAll('li'));
+// --- Keyboard Handler ---
+document.addEventListener('keydown', (event) => {
+    const rows = Array.from(resultsBody.querySelectorAll('tr'));
     const isNumberKey = /^\d$/.test(event.key);
 
     // --- Quantity Input Mode ---
@@ -116,47 +140,43 @@ function handleKeyboardNavigation(event) {
             console.log(`Quantity buffer: ${quantityInputBuffer}`);
             clearTimeout(window.qtyTimer);
             window.qtyTimer = setTimeout(() => {
-                const finalQty = parseInt(quantityInputBuffer, 10);
-                if (finalQty > 0) {
-                    addToCart(quantityModeItem, finalQty);
-                }
+                const qty = parseInt(quantityInputBuffer, 10);
+                if (qty > 0) addToCart(quantityModeItem, qty);
                 exitQuantityMode();
             }, 500);
             return;
         }
 
         if (event.key === 'Enter') {
-            const finalQty = parseInt(quantityInputBuffer || '1', 10);
-            if (finalQty > 0) {
-                addToCart(quantityModeItem, finalQty);
-            }
+            const qty = parseInt(quantityInputBuffer || '1', 10);
+            if (qty > 0) addToCart(quantityModeItem, qty);
             exitQuantityMode();
             return;
         }
 
-        // Any other key cancels quantity mode
+        // Cancel on any other key
         exitQuantityMode();
         return;
     }
 
-    // --- Navigation/Search Mode ---
-    if (results.length === 0) return;
+    // --- Navigation Mode ---
+    if (rows.length === 0) return;
 
     if (['ArrowUp', 'ArrowDown', 'Enter'].includes(event.key)) {
         event.preventDefault();
     }
 
     if (event.key === 'ArrowDown') {
-        const newIndex = Math.min(selectedIndex + 1, results.length - 1);
-        updateSelection(results, newIndex);
+        const newIndex = Math.min(selectedIndex + 1, rows.length - 1);
+        updateSelection(newIndex);
     } 
     else if (event.key === 'ArrowUp') {
         const newIndex = Math.max(selectedIndex - 1, 0);
-        updateSelection(results, newIndex);
-    } 
+        updateSelection(newIndex);
+    }
     else if (event.key === 'Enter' && selectedIndex >= 0) {
-        const selectedLi = results[selectedIndex];
-        const itemId = parseInt(selectedLi.dataset.itemId, 10);
+        const row = rows[selectedIndex];
+        const itemId = parseInt(row.dataset.itemId, 10);
         const item = inventoryList.find(i => i.id === itemId);
         if (item) {
             quantityModeItem = item;
@@ -164,22 +184,22 @@ function handleKeyboardNavigation(event) {
             console.log(`\n**Waiting for quantity input for: ${item.name}**\n`);
         }
     }
-}
+});
 
-// Helper: Exit quantity mode cleanly
+// --- Exit Quantity Mode ---
 function exitQuantityMode() {
     quantityModeItem = null;
     quantityInputBuffer = '';
-    searchInput.focus();
     searchInput.value = '';
+    searchInput.focus();
     filterAndDisplayResults('');
 }
 
-// --- 5. Cart Management ---
+// --- Cart Logic ---
 let shoppingCart = [];
 
 function addToCart(item, quantity = 1) {
-    const qty = parseInt(quantity, 10);
+    const qty = Math.floor(quantity);
     if (qty <= 0 || !item) return;
 
     const existing = shoppingCart.find(i => i.id === item.id);
@@ -188,9 +208,7 @@ function addToCart(item, quantity = 1) {
     } else {
         shoppingCart.push({ ...item, cartQuantity: qty });
     }
-
     renderCart();
-    exitQuantityMode();
 }
 
 function renderCart() {
@@ -210,7 +228,7 @@ function renderCart() {
     document.getElementById('cartTotal').textContent = `Total: PKR ${total.toFixed(2)}`;
 }
 
-// --- 6. Search Input Listener ---
+// --- Search Input Listener ---
 searchInput.addEventListener('input', (e) => {
     if (quantityModeItem === null) {
         filterAndDisplayResults(e.target.value);
