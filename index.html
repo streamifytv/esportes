@@ -1,129 +1,247 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>24/7 Live Sports & Entertainment Channels</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="/esportes/style.css">
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-    <script type='text/javascript' src='//misusesetupindecision.com/5d/e7/87/5de787420376430095251716ce67b979.js'></script>
-<script  src="/esportes/script.js"></script>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" id="gdp" href="#">GD PLAYER</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#"><i class="fas fa-home me-1"></i> Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-dollar-sign me-1"></i> Buy a Plan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-envelope me-1"></i> Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-question-circle me-1"></i> FAQs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fab fa-github me-1"></i> GitHub</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<!-- New Search and Results Area -->
+<h2>Quick Sale / Add to Cart</h2>
+<input type="text" id="searchInput" placeholder="Search drug name..." autofocus>
 
-    <div class="container py-4">
-        <div class="hero-section text-center">
-            <h1 class="display-5 fw-bold mb-3">24/7 Live Sports & Entertainment Channels</h1>
-            <p class="lead mb-4">Access your favorite channels anytime, anywhere. Stream live content with no interruptions.</p>
-            
-            <div class="search-container">
-                <i class="search-icon fas fa-search"></i>
-                <input type="search" class="form-control search-input" id="search" placeholder="Search channels...">
-            </div>
-            <p class="result-count" id="resultCount">Loading channels...</p>
-        </div>
+<div id="searchResultsContainer" style="max-height: 300px; overflow-y: auto; width: 500px; border: 1px solid #ccc;">
+    <ul id="searchResults">
+        <!-- Filtered inventory items will go here -->
+    </ul>
+</div>
 
-        <div class="categories-container" id="categoriesContainer">
-            </div>
+<hr>
+<!-- New Shopping Cart Area -->
+<h2>Shopping Cart</h2>
+<table border="1" id="cartTable">
+    <thead>
+        <tr><th>Name</th><th>Quantity</th><th>Price</th></tr>
+    </thead>
+    <tbody id="cartTableBody">
+        <!-- Cart items will be inserted here -->
+    </tbody>
+</table>
+<div id="cartTotal">Total: PKR 0.00</div>
 
-        <div class="loading-spinner" id="loadingSpinner">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            <p class="mt-2">Loading channels...</p>
-        </div>
 
-        <div class="row g-3" id="channelGrid">
-            </div>
-        
-        <div class="no-results d-none" id="noResults">
-            <i class="fas fa-search fa-3x mb-3"></i>
-            <h4>No channels found</h4>
-            <p>Try different search terms</p>
-        </div>
-    </div>
 
-    <div class="iframe-viewer" id="videoViewer">
-        <div class="iframe-header">
-            <h5 class="mb-0" id="viewerTitle">Channel Viewer</h5>
-            <button class="close-btn" id="closeViewer">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="iframe-container">
-            <video id="channelPlayer" playsinline autoplay muted controls></video>
-            <script type="text/javascript">
-	atOptions = {
-		'key' : '579b0a9ded8d2a821629c141aadb2e2d',
-		'format' : 'iframe',
-		'height' : 50,
-		'width' : 320,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//misusesetupindecision.com/579b0a9ded8d2a821629c141aadb2e2d/invoke.js"></script>
-        </div>
-    </div>
+<script>
+const searchInput = document.getElementById('searchInput');
+const searchResultsUl = document.getElementById('searchResults');
+let selectedIndex = -1; 
+let quantityModeItem = null; // NEW: Holds the item object waiting for quantity input
+let quantityInputBuffer = ''; // NEW: Holds the digits pressed (e.g., '1', '2' -> '12')
 
-    <footer class="footer text-center">
-        <div class="container">
-            <p class="mb-0">© <script>document.write("2018-"+new Date().getFullYear());</script> GD PLAYER TV. All rights reserved.</p>
-            <div class="marquee-container">
-                <div class="logo-box">
-                    <i class="fas fa-warning"></i>
-                </div>
-                <marquee behavior="scroll" direction="left" scrollamount="5">
-                    This site is not affiliated with any television channel. All content is copyright of their respective owners. We cannot accept any responsibility for the content on this site. We cannot control or influence any audiovisual content on this site. Viewers are expected to be wise in processing the information obtained.
-                </marquee>
-                
-            </div>
-            <script type="text/javascript">
-	atOptions = {
-		'key' : '579b0a9ded8d2a821629c141aadb2e2d',
-		'format' : 'iframe',
-		'height' : 50,
-		'width' : 320,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//misusesetupindecision.com/579b0a9ded8d2a821629c141aadb2e2d/invoke.js"></script>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-
+// --- 1. Filter and Display (Conceptual) ---
+function filterAndDisplayResults(searchTerm) {
+    // 1. Clear previous results and reset index
+    searchResultsUl.innerHTML = '';
+    selectedIndex = -1; 
     
+    // 2. Filter the main inventory list (replace with your actual data source)
+    const filteredItems = inventoryList.filter(item => 
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ).slice(0, 10); // Limit to top 10 results
 
-</body>
-</html>
+    // 3. Create <li> elements and append
+    filteredItems.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} (Qty: ${item.quantity})`;
+        li.dataset.itemId = item.id; // Store item ID for easy retrieval later
+        li.dataset.index = index; // Store its position in the current list
+
+        // Automatically highlight the first item if there are results
+        if (index === 0) {
+            li.classList.add('selected');
+            selectedIndex = 0;
+        }
+
+        searchResultsUl.appendChild(li);
+    });
+}
+
+// ... (updateSelection function remains the same) ...
+
+/** Updates the selected item highlight and scrolls into view */
+function updateSelection(results, newIndex) {
+    if (selectedIndex > -1) {
+        results[selectedIndex].classList.remove('selected');
+    }
+    
+    selectedIndex = newIndex;
+    results[selectedIndex].classList.add('selected');
+    
+    // Ensure the selected item is visible (optional but good for long lists)
+    results[selectedIndex].scrollIntoView({ block: 'nearest' });
+}
+
+
+// --- 2. UPDATED Keyboard Navigation Handler (Main Logic) ---
+document.addEventListener('keydown', handleKeyboardNavigation);
+
+function handleKeyboardNavigation(event) {
+    const results = searchResultsUl.querySelectorAll('li');
+    const isNumberKey = /^\d$/.test(event.key);
+    
+    // --- 2a. Handle Quantity Input Mode ---
+    if (quantityModeItem !== null) {
+        if (isNumberKey) {
+            // Buffer the numerical input
+            quantityInputBuffer += event.key;
+            
+            // OPTIONAL: Provide visual feedback on the number being pressed
+            console.log(`Quantity buffer: ${quantityInputBuffer}`); 
+            
+            // Set a short timer to process the buffered input (e.g., after 200ms)
+            // This allows the user to quickly type '12' before the item is added.
+            clearTimeout(window.qtyTimer);
+            window.qtyTimer = setTimeout(() => {
+                const finalQuantity = parseInt(quantityInputBuffer, 10);
+                
+                if (finalQuantity > 0) {
+                    addToCart(quantityModeItem, finalQuantity);
+                }
+                
+                // Reset state after processing
+                quantityModeItem = null;
+                quantityInputBuffer = '';
+                searchInput.focus(); // Return focus to search
+            }, 500); // 500ms timeout for input gathering
+
+            return; // Exit the function to prevent further processing
+        }
+        
+        // If the key is not a number, but we are in quantity mode (e.g. they hit a letter or space)
+        // We can optionally check if they pressed 'Enter' to confirm the current single digit
+        if (event.key === 'Enter') {
+             // Use the current buffer, default to 1 if buffer is empty
+             const finalQuantity = parseInt(quantityInputBuffer || '1', 10);
+             if (finalQuantity > 0) {
+                 addToCart(quantityModeItem, finalQuantity);
+             }
+             
+             // Reset state after processing
+             quantityModeItem = null;
+             quantityInputBuffer = '';
+             searchInput.focus();
+             return;
+        }
+
+        // If a non-numerical, non-Enter key is pressed, we could just exit quantity mode
+        quantityModeItem = null;
+        quantityInputBuffer = '';
+        searchInput.focus();
+        return;
+    }
+
+
+    // --- 2b. Handle Search and Navigation Mode ---
+    if (results.length === 0) return; 
+
+    // Prevent default browser behavior for navigation keys
+    if (['ArrowUp', 'ArrowDown', 'Enter'].includes(event.key)) {
+        event.preventDefault(); 
+    }
+
+    if (event.key === 'ArrowDown') {
+        let newIndex = Math.min(selectedIndex + 1, results.length - 1);
+        updateSelection(results, newIndex);
+
+    } else if (event.key === 'ArrowUp') {
+        let newIndex = Math.max(selectedIndex - 1, 0);
+        updateSelection(results, newIndex);
+
+    } else if (event.key === 'Enter' && selectedIndex !== -1) {
+        
+        const selectedLi = results[selectedIndex];
+        const itemId = parseInt(selectedLi.dataset.itemId);
+        const itemToAdd = inventoryList.find(item => item.id === itemId);
+        
+        if (!itemToAdd) return;
+
+        // NEW LOGIC: Switch to quantity input mode
+        quantityModeItem = itemToAdd;
+        quantityInputBuffer = ''; // Clear buffer for new input
+        
+        // OPTION 1: Use a prompt (Simpler but interrupts flow)
+        // const qty = prompt(`Enter Quantity for ${itemToAdd.name}:`, 1);
+        // if (qty && !isNaN(parseInt(qty))) {
+        //    addToCart(itemToAdd, parseInt(qty));
+        //    quantityModeItem = null; // Clear state
+        // }
+
+
+        // OPTION 2 (The requested fast mode):
+        // Visually indicate that the system is now waiting for a number
+        console.log(`\n**Waiting for quantity input for: ${itemToAdd.name}**\n`);
+    }
+}
+
+
+// --- 3. UPDATED Cart Management ---
+let shoppingCart = [];
+
+function addToCart(item, quantity = 1) { // Accept quantity as an argument
+    // Ensure quantity is a valid number
+    const qty = parseInt(quantity, 10);
+    if (qty <= 0) return; 
+
+    // Check if item is already in cart
+    const existingItem = shoppingCart.find(cartItem => cartItem.id === item.id);
+    
+    if (existingItem) {
+        existingItem.cartQuantity += qty;
+    } else {
+        shoppingCart.push({...item, cartQuantity: qty, price: item.price || 10.50 });
+    }
+    
+    // Re-render the cart table
+    renderCart();
+    // Clear search and results
+    searchInput.value = '';
+    filterAndDisplayResults('');
+    
+    console.log(`Added ${qty} x ${item.name} to cart.`);
+}
+
+// ... (renderCart function remains the same) ...
+
+function renderCart() {
+    const cartBody = document.getElementById('cartTableBody');
+    cartBody.innerHTML = '';
+    let total = 0;
+
+    shoppingCart.forEach(item => {
+        const row = cartBody.insertRow();
+        row.insertCell().textContent = item.name;
+        row.insertCell().textContent = item.cartQuantity;
+        const subtotal = item.price * item.cartQuantity;
+        row.insertCell().textContent = `PKR:${subtotal.toFixed(2)}`;
+        total += subtotal;
+    });
+
+    document.getElementById('cartTotal').textContent = `Total: RS: ${total.toFixed(2)}`;
+}
+
+
+// --- 4. Initialization ---
+
+// Attach the search function to the input field
+searchInput.addEventListener('input', (e) => {
+    // Only search if not in quantity mode
+    if (quantityModeItem === null) {
+        filterAndDisplayResults(e.target.value);
+    }
+});
+
+// A dummy inventory list for demonstration. In the real app, this comes from IndexedDB.
+let inventoryList = [
+    { id: 1, name: "Pain Relief Tablets", quantity: 50, price: 10.50 },
+    { id: 2, name: "Allergy Medication", quantity: 20, price: 15.00 },
+    { id: 3, name: "Cough Syrup", quantity: 15, price: 8.75 },
+    { id: 4, name: "Vitamin C Supplement", quantity: 100, price: 22.00 },
+    { id: 5, name: "Band-Aids (Box)", quantity: 75, price: 5.00 },
+    // ... more items
+];
+
+// Initial display of items (or load from IndexedDB first)
+filterAndDisplayResults('');
+</script>
