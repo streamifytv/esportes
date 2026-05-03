@@ -22,7 +22,7 @@
 
         // Fetch schedule data
         async function fetchSchedule() {
-            const url = 'https://cors.eu.org/https://tv247.us/schedule.json';
+            const url = 'https://cors.eu.org/https://tv247us.vip/schedule.json';
             try {
                 const response = await fetch(url, {
                     method: 'GET',
